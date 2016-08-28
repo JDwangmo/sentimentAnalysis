@@ -138,6 +138,10 @@ def evaluate(train_data,test_data,top_word=3,top_cluster=3,verbose=0):
         V_preds.append(V_pred)
         A_preds.append(A_pred)
         # quit()
+    
+    test_data['V_pred'] = V_preds
+    test_data['A_pred'] = A_preds
+    
     V_mae = mean_absolute_error(test_data['Valence_Mean'].values, V_preds)
     A_mae = mean_absolute_error(test_data['Arousal_Mean'].values,A_preds)
     print('Valence Mean absolute error:%f'%V_mae)
@@ -202,13 +206,14 @@ def test1():
     train_data = train_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
     test_data = test_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
     # 聚类
-    num_clusters = 5
+    num_clusters = 100
     knnCluster(train_data,num_clusters,verbose=0)
     # quit()
-    evaluate(train_data,test_data,top_word=3,top_cluster=3,verbose=0)
-
+    evaluate(train_data,test_data,top_word=2,top_cluster=4,verbose=0)
+    print(test_data.head())
+    dutil.save_data_to_csv(test_data,'/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/kmeans_knn_result.csv')
     # print(clusters[0])
 
 if __name__ == '__main__':
-    # test1()
-    cross_validation()
+    test1()
+    # cross_validation()
