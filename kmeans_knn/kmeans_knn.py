@@ -8,6 +8,7 @@
 from __future__ import print_function
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 from sklearn.metrics import mean_absolute_error
 from dataset.data_util import DataUtil
@@ -20,20 +21,41 @@ def showChart(points, position):  # 绘制图表
     plt.show()
     return
 
-def knnCluster(train,num_clusters=5,verbose=0):
+def knnCluster(train,
+               num_clusters=5,
+               columns=None,
+               verbose=0):
+    """
+        Kmeans 聚类
+
+    :param train: 训练集
+    :param num_clusters: 聚类个数
+    :param columns: 指定使用哪一列聚类
+    :param verbose: 0,1,2
+    :return:
+    """
     # words = train[['Word_jian']].values
-    filter_xy = train[['Valence_Mean', 'Arousal_Mean']].values
+    if columns is None:
+        columns = ['Valence_Mean', 'Arousal_Mean']
+    print('columns:%s'%columns)
+    print('-'*40)
+    filter_xy = train[columns].values
     random_seed = 1
-    class_arr = KMeans(n_clusters=num_clusters, random_state=random_seed).fit_predict(filter_xy)  # n_clusters 聚类个数
+    kmeans = KMeans(n_clusters=num_clusters, random_state=random_seed)  # n_clusters 聚类个数
+    class_arr = kmeans.fit_predict(filter_xy)
     if verbose>1:
-        showChart(filter_xy,class_arr)
+        showChart(train[['Valence_Mean', 'Arousal_Mean']].values,class_arr)
 
     # clusters = [[] for i in range(num_clusters)]
     # for i in range(len(class_arr)):
     #     clusters[class_arr[i]].append(words[i])
+    # 肘部法则，计算loss
+    loss = sum(np.min(cdist(filter_xy, kmeans.cluster_centers_, 'euclidean'),axis=1))/len(filter_xy)
+    # print(loss)
     # 将聚类结果保存
     train.loc[:,'Cluster_ID'] = class_arr
     # return clusters
+    return loss
 
 def predict(train_data,word,top_word = 3,top_cluster=3,verbose=0):
 
@@ -130,17 +152,17 @@ def evaluate(train_data,test_data,top_word=3,top_cluster=3,verbose=0):
     """
     V_preds = []
     A_preds = []
-    for word,V,A in test_data.values:
+    for No,word,V,A in test_data.values:
         # word=u'极好'
         V_pred,A_pred = predict(train_data,word,top_word=top_word,top_cluster=top_cluster,verbose=verbose)
         if verbose >0:
-            print(word,V,A,V_pred,A_pred)
+            print(No,word,V,A,V_pred,A_pred)
         V_preds.append(V_pred)
         A_preds.append(A_pred)
         # quit()
     
-    test_data['V_pred'] = V_preds
-    test_data['A_pred'] = A_preds
+    test_data.loc[:,'V_pred'] = V_preds
+    test_data.loc[:,'A_pred'] = A_preds
     
     V_mae = mean_absolute_error(test_data['Valence_Mean'].values, V_preds)
     A_mae = mean_absolute_error(test_data['Arousal_Mean'].values,A_preds)
@@ -155,9 +177,45 @@ def evaluate(train_data,test_data,top_word=3,top_cluster=3,verbose=0):
     return V_mae,A_mae,V_p,A_p
 
 
+def select_kmeans_k():
+    """
+        # 通过肘部法则，选出合适 的k
+
+    :return:
+    """
+
+    train_data, test_data = dutil.get_train_test_data(version='1').next()
+    print('训练集和测试集个数分别为：%d,%d'%(len(train_data),len(test_data)))
+    # quit()
+    train_data = train_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
+    columns = ['Valence_Mean']
+    # 聚类
+    num_clusters_list = xrange(1,100)
+    loss_list = []
+    for num_clusters in num_clusters_list:
+        loss = knnCluster(train_data,
+                          num_clusters,
+                          columns=columns,
+                          verbose=0)
+        loss_list.append(loss)
+    xticks = range(min(num_clusters_list), max(num_clusters_list) + 1, 1)
+    yticks = np.arange(min(loss_list)-0.1, max(loss_list) + 0.1, 0.1)
+    plt.xticks(xticks)
+    plt.yticks(yticks)
+    plt.axis([num_clusters_list[0]-1,num_clusters_list[-1]+1,min(loss_list)-0.1,max(loss_list)+0.1])
+    plt.plot(num_clusters_list,loss_list,'b*-')
+    plt.title(','.join(columns), fontsize=18)
+    plt.ylabel('loss', fontsize=18)
+    plt.xlabel('num_clusters', fontsize=18)
+    plt.tight_layout()
+    plt.show()
+    plt.close()
+    plt.clf()
+
+
 def cross_validation():
-    for num_clusters in [1,5,20,50,100,150,200]:
-        for top_word in [1,2,3,4,5]:
+    for num_clusters in [10]:
+        for top_word in [1,2,3,4,5,6,7,8]:
             for top_cluster in [1,2,3,4]:
                 # num_clusters = 200
                 # top_word = 3
@@ -177,9 +235,12 @@ def cross_validation():
                     print('-'*40)
                     print('训练集和测试集个数分别为：%d,%d' % (len(train_data), len(test_data)))
                     train_data = train_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
-                    test_data = test_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
+                    test_data = test_data[['No.','Word_jian', 'Valence_Mean', 'Arousal_Mean']]
                     # 聚类
-                    knnCluster(train_data,num_clusters,verbose=0)
+                    knnCluster(train_data,
+                               num_clusters,
+                               # columns=['Arousal_Mean'],
+                               verbose=0)
                     V_mae, A_mae, V_p, A_p = evaluate(train_data,test_data,top_word=top_word,top_cluster=top_cluster,verbose=0)
                     V_mae_socre_list += [V_mae]
                     A_mae_socre_list += [A_mae]
@@ -201,19 +262,26 @@ def test1():
     # 测试模型
     train_data, test_data = dutil.get_train_test_data(version='1').next()
     print('训练集和测试集个数分别为：%d,%d'%(len(train_data),len(test_data)))
-    # print test.head()
+    print('='*40)
+    # print(test_data.head())
+    # print(train_data.shape)
     # quit()
     train_data = train_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
-    test_data = test_data[['Word_jian', 'Valence_Mean', 'Arousal_Mean']]
+
+    test_data = test_data[['No.','Word_jian', 'Valence_Mean', 'Arousal_Mean']]
     # 聚类
-    num_clusters = 100
-    knnCluster(train_data,num_clusters,verbose=0)
-    # quit()
-    evaluate(train_data,test_data,top_word=2,top_cluster=4,verbose=0)
-    print(test_data.head())
-    dutil.save_data_to_csv(test_data,'/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/kmeans_knn_result.csv')
+    num_clusters = 10
+    knnCluster(train_data,
+               num_clusters,
+               columns=['Valence_Mean'],
+               verbose=0)
+
+    evaluate(train_data,test_data,top_word=8,top_cluster=4,verbose=2)
+    # print(test_data.head())
+    dutil.save_data_to_csv(test_data,'/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/kmeans_knn_final_test_result.csv')
     # print(clusters[0])
 
 if __name__ == '__main__':
-    test1()
-    # cross_validation()
+    # select_kmeans_k()
+    # test1()
+    cross_validation()
