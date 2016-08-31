@@ -87,9 +87,10 @@ def predict(train_data,word,top_word = 3,top_cluster=3,verbose=0):
 
     return V,A
 
-def get_predict_result(scores,top=1):
+def get_predict_result(scores,top=1,threshold=0.6):
     """
-        根据近似性结果，去除top3的词，进行算 VA值
+        根据近似性结果，去除 top-n 聚类之外的词，进行算 VA值，
+        最多取 top 个，最少取1个，如果 top 个内，近似值 大于 某个阈值才计入
 
     :param scores:
     :param top:
@@ -99,10 +100,11 @@ def get_predict_result(scores,top=1):
     V = []
     A = []
     sim = []
-    for item in scores:
-        V.extend([i[1] for i in item[2]])
-        A.extend([i[2] for i in item[2]])
-        sim.extend(item[-1])
+    for index,item in enumerate(scores):
+        if index<1 or item[3][0]> threshold:
+            V.extend([i[1] for i in item[2]])
+            A.extend([i[2] for i in item[2]])
+            sim.extend(item[-1])
     V = np.asarray(V)
     A = np.asarray(A)
     sim = np.asarray( [ item if item>0 else 0.1 for item in sim])
@@ -215,7 +217,7 @@ def select_kmeans_k():
 
 def cross_validation():
     for num_clusters in [10]:
-        for top_word in [1,2,3,4,5,6,7,8]:
+        for top_word in [3,4,5,6,7,8]:
             for top_cluster in [1,2,3,4]:
                 # num_clusters = 200
                 # top_word = 3
@@ -239,7 +241,7 @@ def cross_validation():
                     # 聚类
                     knnCluster(train_data,
                                num_clusters,
-                               # columns=['Arousal_Mean'],
+                               columns=['Valence_Mean'],
                                verbose=0)
                     V_mae, A_mae, V_p, A_p = evaluate(train_data,test_data,top_word=top_word,top_cluster=top_cluster,verbose=0)
                     V_mae_socre_list += [V_mae]
@@ -273,15 +275,15 @@ def test1():
     num_clusters = 10
     knnCluster(train_data,
                num_clusters,
-               columns=['Valence_Mean'],
+               # columns=['Valence_Mean'],
                verbose=0)
 
-    evaluate(train_data,test_data,top_word=8,top_cluster=4,verbose=2)
+    evaluate(train_data,test_data,top_word=8,top_cluster=2,verbose=2)
     # print(test_data.head())
     dutil.save_data_to_csv(test_data,'/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/kmeans_knn_final_test_result.csv')
     # print(clusters[0])
 
 if __name__ == '__main__':
     # select_kmeans_k()
-    # test1()
-    cross_validation()
+    test1()
+    # cross_validation()

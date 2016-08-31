@@ -6,18 +6,6 @@ num_clusters,top_word,top_cluster: 10,1,1:
 训练集和测试集个数分别为：1322,331
 columns:['Valence_Mean']
 ----------------------------------------
-/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py:288: SettingWithCopyWarning:
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-  self.obj[key] = _infer_fill_value(value)
-/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py:465: SettingWithCopyWarning:
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-  self.obj[item] = s
 Valence Mean absolute error:0.937764
 Arousal Mean absolute error:1.067674
 Valence Pearson correlation coefficient:0.695880
