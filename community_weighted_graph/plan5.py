@@ -10,7 +10,7 @@ from itertools import combinations
 import gensim
 import community as comg
 
-threshold = 0.3  # 建边的阈值
+threshold = 0  # 建边的阈值
 
 
 dataname = '/home/jdwang/PycharmProjects/sentimentAnalysis/test2/cvaw1.csv'  # 训练集文件
@@ -235,7 +235,7 @@ def makeSampleGraph():
         for j in xrange(i + 1, size):
             if (data_word[i] in model and data_word[j] in model):
                 sim = model.similarity(data_word[i], data_word[j])
-                if (sim > 0):
+                if (sim > threshold):
                     g.add_edge(data_word[i], data_word[j], weight=sim)
     return g
 
@@ -304,7 +304,7 @@ def run():
     sample_graph = makeSampleGraph()
     #louvain = Louvain()
     #partition = louvain.getBestPartition(sample_graph)
-    partition = comg.best_partition(sample_graph)
+    partition = comg.best_partition(sample_graph,resolution=.96)
     p = defaultdict(list)
 
     for node, com_id in partition.items():
