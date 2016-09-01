@@ -448,7 +448,7 @@ def cross_validation():
 
 def test1():
     # 测试模型
-    train_data, test_data = dutil.get_train_test_data(version='1').next()
+    train_data, test_data = dutil.get_train_test_data(version='2').next()
     print('训练集和测试集个数分别为：%d,%d' % (len(train_data), len(test_data)))
     print('=' * 40)
     # print(test_data.head())
@@ -470,9 +470,9 @@ def test1():
              top_word=20,
              top_cluster=3,
              threshold=0.3,
-             use_kmeans=True,
+             use_kmeans=False,
              use_emotional_lexicon=True,
-             revise=False,
+             revise=True,
              verbose=2,
              )
     # print(test_data.head())
