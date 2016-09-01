@@ -9,6 +9,7 @@ from itertools import permutations
 from itertools import combinations
 import gensim
 import community as comg
+from sklearn.metrics import mean_absolute_error
 
 threshold = 0  # 建边的阈值
 
@@ -301,6 +302,8 @@ def evaluation(test, result):
 
 
 def run():
+    from dataset.data_util import DataUtil
+    dutil = DataUtil()
     sample_graph = makeSampleGraph()
     #louvain = Louvain()
     #partition = louvain.getBestPartition(sample_graph)
@@ -325,6 +328,54 @@ def run():
     for i in xrange(cnt):
         for word in nodes2word[i]:
             word2nodes[word] = i
+
+    V_array = np.asarray(train['Valence_Mean'].values.tolist() + [5] * test.shape[0])
+    A_array = np.asarray(train['Arousal_Mean'].values.tolist() + [5] * test.shape[0])
+    all_words = train['Word_jian'].values.tolist() + test['Word_jian'].values.tolist()
+    num_all_words = len(all_words)
+    num_train_words = len(train)
+    num_test_words = len(test)
+    # word_to_cluster_id = {k: v for k, v in train[['Word_jian', 'Cluster_ID']].values}
+    # word_to_cluster_id.get(u'\u62a4',0)
+    # quit()
+    print(len(all_words))
+    S = np.zeros((num_all_words, num_all_words))
+    for word_idx, word in enumerate(all_words):
+        words_sim = [
+            dutil.get_word_similarity(word, item) if word2nodes.get(item, -1) == -1 or word2nodes.get(
+                word, -1) == -1 or word2nodes[word] == word2nodes[item] else 0 for item in all_words]
+        S[word_idx] = words_sim
+
+    alpha = 0.1
+
+    D = np.asarray([0] * num_train_words + [alpha] * num_test_words)
+    I = np.ones(num_all_words)
+    Vt = V_array
+    At = A_array
+    num_epoch = 50
+
+    for epoch in range(1, num_epoch + 1):
+        Vt = ((I - D) * Vt) + (D * (np.dot(S, Vt) / np.dot(S, I)))
+        Vt = np.nan_to_num(Vt)
+
+        At = ((I - D) * At) + (D * (np.dot(S, Vt) / np.dot(S, I)))
+        At = np.nan_to_num(At)
+
+        print('第%d次迭代' % epoch)
+        print(Vt[-num_test_words:])
+        print(At[-num_test_words:])
+
+    test_V_pred = Vt[-num_test_words:]
+    test_A_pred = At[-num_test_words:]
+
+    print(test_V_pred)
+    print(test['Valence_Mean'] - test_V_pred)
+
+    V_mae = mean_absolute_error(test['Valence_Mean'].values, test_V_pred)
+    A_mae = mean_absolute_error(test['Arousal_Mean'].values, test_A_pred)
+    print(V_mae)
+    print(A_mae)
+
 
 
     test_words = test[['No.', 'Word_jian', 'Valence_Mean', 'Arousal_Mean']].values

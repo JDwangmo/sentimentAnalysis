@@ -1,7 +1,7 @@
 # encoding=utf8
 """
     Author:  'jdwang'
-    Date:    'create date: 2016-08-27'
+    Date:    'create date: 2016-09-01'
     Email:   '383287471@qq.com'
     Describe:
 """
@@ -445,6 +445,8 @@ def cross_validation():
                 print(A_p_socre_list)
                 # quit()
 
+def weighted_graph_model():
+    pass
 
 def test1():
     # 测试模型
@@ -458,12 +460,62 @@ def test1():
 
     test_data = test_data[['No.', 'Word_jian', 'Valence_Mean', 'Arousal_Mean']]
     # 聚类
-    num_clusters = 12
+    num_clusters = 5
     knnCluster(train_data,
                num_clusters,
                columns=['Valence_Mean'],
                verbose=0)
 
+    test_V_true =  test_data['Valence_Mean'].values.tolist()
+
+
+
+    V_array = np.asarray(train_data['Valence_Mean'].values.tolist()+[5]*test_data.shape[0])
+    A_array = np.asarray(train_data['Arousal_Mean'].values.tolist()+[5]*test_data.shape[0])
+    all_words = train_data['Word_jian'].values.tolist()+test_data['Word_jian'].values.tolist()
+    num_all_words = len(all_words)
+    num_train_words = len(train_data)
+    num_test_words = len(test_data)
+    word_to_cluster_id = {k:v for k,v in train_data[['Word_jian','Cluster_ID']].values}
+    # word_to_cluster_id.get(u'\u62a4',0)
+    # quit()
+    print(len(all_words))
+    S = np.zeros((num_all_words,num_all_words))
+    for word_idx,word in enumerate(all_words):
+        words_sim = [dutil.get_word_similarity(word,item) if word_to_cluster_id.get(item,-1)==-1 or word_to_cluster_id.get(word,-1)==-1 or word_to_cluster_id[word]==word_to_cluster_id[item] else 0 for item in all_words ]
+        S[word_idx]=words_sim
+
+    alpha = 0.1
+
+    D = np.asarray([0]*num_train_words+[alpha]*num_test_words )
+    I = np.ones(num_all_words)
+    Vt = V_array
+    At = A_array
+    num_epoch = 50
+
+    for epoch in range(1,num_epoch+1):
+
+        Vt = ((I - D) * Vt) + (D*(np.dot(S,Vt)/np.dot(S,I)))
+        Vt = np.nan_to_num(Vt)
+
+        At = ((I - D) * At) + (D*(np.dot(S,Vt)/np.dot(S,I)))
+        At = np.nan_to_num(At)
+
+        print('第%d次迭代'%epoch)
+        print(Vt[-num_test_words:])
+
+    test_V_pred = Vt[-num_test_words:]
+    test_A_pred = At[-num_test_words:]
+
+    print(test_V_pred)
+    print(test_V_true-test_V_pred)
+
+    V_mae = mean_absolute_error(test_data['Valence_Mean'].values, test_V_pred)
+    A_mae = mean_absolute_error(test_data['Arousal_Mean'].values, test_A_pred)
+    print(V_mae)
+    print(A_mae)
+
+    quit()
     evaluate(train_data,
              test_data,
              predict_method=1,
