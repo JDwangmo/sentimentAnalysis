@@ -121,13 +121,13 @@ def community_detection():
 	nodes = [ {'name':node['name']} for node in ig.vs]
 	for node in nodes:
 		idx = ig.vs.find( name=node['name']).index
-		node['community'] = clusters.membership[idx]
+		node['community_weighted_graph'] = clusters.membership[idx]
 
 	write_clusters_query = '''
 	unwind {nodes} as n
 	match (w:WORD)
 	where w.name = n.name
-	set w.community = toInt(n.community)
+	set w.community_weighted_graph = toInt(n.community_weighted_graph)
 	'''
 	graph.cypher.execute(write_clusters_query, nodes=nodes)
 community_detection()
@@ -239,7 +239,7 @@ def evaluation(test, result):
 def run():
 	sim_words_query = '''
 		match (w:WORD)
-		with w.community as cluster, collect(w.name) as sim_words
+		with w.community_weighted_graph as cluster, collect(w.name) as sim_words
 		return cluster, sim_words
 		order by cluster
 		'''
