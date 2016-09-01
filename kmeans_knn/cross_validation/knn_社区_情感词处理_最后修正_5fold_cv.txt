@@ -1,0 +1,75 @@
+/usr/bin/python2.7 /home/jdwang/PycharmProjects/sentimentAnalysis/test2/knnewCommunity.py
+none 9
+V_A_mean: 0.0 ------- V_P_mean: 4.62062692448
+A_A_mean: 0.0 ------- A_P_mean: 5.66557601905
+
+V_std: 0.0 ------- V_P_std: 1.72600261669
+A_std: 0.0 ------- A_P_std: 0.829859278621
+
+
+Valence mean absolute error: 4.62062692448
+Arousal mean absolute error: 5.66557601905
+Valence pearson correlation coefficient: nan
+Arousal pearson correlation coefficient: nan
+none 5
+V_A_mean: 4.47552870091 ------- V_P_mean: 4.3239918731
+A_A_mean: 5.87129909366 ------- A_P_mean: 5.78244398545
+
+V_std: 1.87293635276 ------- V_P_std: 1.69570646039
+A_std: 1.29977611527 ------- A_P_std: 0.826377555511
+
+
+Valence mean absolute error: 0.625477725169
+Arousal mean absolute error: 0.855442064743
+Valence pearson correlation coefficient: 0.872761111937
+Arousal pearson correlation coefficient: 0.578080517323
+none 9
+V_A_mean: 4.42363636364 ------- V_P_mean: 4.32779289239
+A_A_mean: 5.7503030303 ------- A_P_mean: 5.78368965097
+
+V_std: 1.78690153055 ------- V_P_std: 1.63233726571
+A_std: 1.22279482371 ------- A_P_std: 0.767469125478
+
+
+Valence mean absolute error: 0.632761252077
+Arousal mean absolute error: 0.822238175046
+Valence pearson correlation coefficient: 0.873374199015
+Arousal pearson correlation coefficient: 0.526357925799
+none 3
+V_A_mean: 4.54484848485 ------- V_P_mean: 4.39205041079
+A_A_mean: 5.65757575758 ------- A_P_mean: 5.85409205363
+
+V_std: 1.82387885232 ------- V_P_std: 1.70814406381
+A_std: 1.27244224803 ------- A_P_std: 0.779233637144
+
+
+Valence mean absolute error: 0.62863741072
+Arousal mean absolute error: 0.790187550866
+Valence pearson correlation coefficient: 0.867144958343
+Arousal pearson correlation coefficient: 0.635285651266
+none 6
+V_A_mean: 4.56495468278 ------- V_P_mean: 4.28341972673
+A_A_mean: 5.75347432024 ------- A_P_mean: 5.86885453637
+
+V_std: 1.77542256944 ------- V_P_std: 1.62796167281
+A_std: 1.24638874672 ------- A_P_std: 0.733543893052
+
+
+Valence mean absolute error: 0.770053721595
+Arousal mean absolute error: 0.807671101483
+Valence pearson correlation coefficient: 0.791330656848
+Arousal pearson correlation coefficient: 0.567769547618
+none 10
+V_A_mean: 4.4670694864 ------- V_P_mean: 4.31681983505
+A_A_mean: 5.69123867069 ------- A_P_mean: 5.88135495546
+
+V_std: 1.79895157231 ------- V_P_std: 1.65849873811
+A_std: 1.24128939899 ------- A_P_std: 0.749384992581
+
+
+Valence mean absolute error: 0.684018664232
+Arousal mean absolute error: 0.853389656856
+Valence pearson correlation coefficient: 0.852664260987
+Arousal pearson correlation coefficient: 0.495657932086
+
+Process finished with exit code 0

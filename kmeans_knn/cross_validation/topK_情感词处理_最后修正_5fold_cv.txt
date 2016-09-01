@@ -1,0 +1,144 @@
+========================================
+num_clusters,top_word,top_cluster: 8,8,4:
+训练：
+----------------------------------------
+训练集和测试集个数分别为：1653,1158
+columns:['Valence_Mean']
+----------------------------------------
+/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py:288: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[key] = _infer_fill_value(value)
+/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py:465: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[item] = s
+Valence Mean absolute error:4.679357
+Arousal Mean absolute error:1.000000
+Valence Pearson correlation coefficient:nan
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证1：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.585183
+Arousal Mean absolute error:4.871299
+Valence Pearson correlation coefficient:0.883913
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证2：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.616978
+Arousal Mean absolute error:4.750303
+Valence Pearson correlation coefficient:0.874714
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证3：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.606237
+Arousal Mean absolute error:4.657576
+Valence Pearson correlation coefficient:0.877791
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证4：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.728008
+Arousal Mean absolute error:4.753474
+Valence Pearson correlation coefficient:0.812408
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证5：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.664016
+Arousal Mean absolute error:4.691239
+Valence Pearson correlation coefficient:0.856732
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+[4.679357395717008, 0.58518340685740233, 0.61697813105093113, 0.60623699681533494, 0.72800759005957905, 0.66401587083248081, 0.64008439912314563]
+[1.0, 4.8712990936555896, 4.75030303030303, 4.6575757575757573, 4.7534743202416925, 4.6912386706948643, 4.7447781744941873]
+[nan, 0.88391349279533782, 0.87471396273703961, 0.87779054327052741, 0.81240797354370153, 0.85673205022853627, 0.86111160451502844]
+[nan, nan, nan, nan, nan, nan, nan]
+========================================
+num_clusters,top_word,top_cluster: 8,20,4:
+训练：
+----------------------------------------
+训练集和测试集个数分别为：1653,1158
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:4.708864
+Arousal Mean absolute error:1.000000
+Valence Pearson correlation coefficient:nan
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证1：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.569683
+Arousal Mean absolute error:4.871299
+Valence Pearson correlation coefficient:0.904099
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证2：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.626513
+Arousal Mean absolute error:4.750303
+Valence Pearson correlation coefficient:0.869078
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证3：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.600088
+Arousal Mean absolute error:4.657576
+Valence Pearson correlation coefficient:0.882879
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证4：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.698523
+Arousal Mean absolute error:4.753474
+Valence Pearson correlation coefficient:0.828689
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证5：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.648322
+Arousal Mean absolute error:4.691239
+Valence Pearson correlation coefficient:0.865150
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+[4.7088644189088216, 0.56968309904655123, 0.62651309789567189, 0.60008784436308493, 0.69852272730325715, 0.64832235138488525, 0.62862582399869016]
+[1.0, 4.8712990936555896, 4.75030303030303, 4.6575757575757573, 4.7534743202416925, 4.6912386706948643, 4.7447781744941873]
+[nan, 0.90409911281602495, 0.86907819850032098, 0.88287905688927804, 0.82868915313943736, 0.8651496108363208, 0.86997902643627645]
+[nan, nan, nan, nan, nan, nan, nan]

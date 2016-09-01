@@ -7,9 +7,9 @@
 """
 from __future__ import print_function
 
-choice = 2
+choice = 3
 count =0
-with open('/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/cv_result.txt','r') as fin:
+with open('/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/cross_validation/knn_社区_最后修正_5fold_cv.txt','r') as fin:
     for line in fin:
         line = line.strip()
         if choice ==1:
@@ -19,6 +19,14 @@ with open('/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/cv_result.t
         elif choice==2:
             if line.startswith('['):
                 line = line.replace('[','').replace(']','')
-                if count%4==3:
+                if count%4==2:
                     print(line)
                 count+=1
+        elif choice==3:
+            if line.startswith('Valence mean absolute error:'):
+                line = line.replace('Valence mean absolute error: ', '')
+                print(line)
+        elif choice==4:
+            if line.startswith('Valence pearson correlation coefficient: '):
+                line = line.replace('Valence pearson correlation coefficient: ', '')
+                print(line)

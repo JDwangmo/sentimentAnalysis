@@ -1,0 +1,147 @@
+/usr/bin/python2.7 /home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/kmeans_knn.py
+========================================
+num_clusters,top_word,top_cluster: 8,8,4:
+训练：
+----------------------------------------
+训练集和测试集个数分别为：1653,1158
+columns:['Valence_Mean']
+----------------------------------------
+/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py:288: SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[key] = _infer_fill_value(value)
+/usr/local/lib/python2.7/dist-packages/pandas/core/indexing.py:465: SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[item] = s
+Valence Mean absolute error:4.441813
+Arousal Mean absolute error:5.698055
+Valence Pearson correlation coefficient:nan
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证1：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.787229
+Arousal Mean absolute error:0.870984
+Valence Pearson correlation coefficient:0.817337
+Arousal Pearson correlation coefficient:0.571127
+----------------------------------------
+验证2：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.810853
+Arousal Mean absolute error:0.803373
+Valence Pearson correlation coefficient:0.801275
+Arousal Pearson correlation coefficient:0.544906
+----------------------------------------
+验证3：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.809308
+Arousal Mean absolute error:0.793054
+Valence Pearson correlation coefficient:0.824625
+Arousal Pearson correlation coefficient:0.633291
+----------------------------------------
+验证4：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.849283
+Arousal Mean absolute error:0.831182
+Valence Pearson correlation coefficient:0.785542
+Arousal Pearson correlation coefficient:0.543468
+----------------------------------------
+验证5：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.812460
+Arousal Mean absolute error:0.829715
+Valence Pearson correlation coefficient:0.798081
+Arousal Pearson correlation coefficient:0.540563
+----------------------------------------
+[4.4418125286185264, 0.78722921963889214, 0.81085284735838192, 0.80930825164781206, 0.84928282606231698, 0.81245985905312312, 0.81382660075210522]
+[5.6980549582449482, 0.87098368316870323, 0.80337270810751227, 0.79305415397970336, 0.83118202926848439, 0.8297147567955736, 0.82566146626399539]
+[nan, 0.81733666048914078, 0.80127480723262079, 0.82462476515364436, 0.78554187235871276, 0.79808136877094427, 0.80537189480101257]
+[nan, 0.57112654309933319, 0.54490550556606243, 0.63329094748107062, 0.54346837366249068, 0.54056314422505214, 0.56667090280680177]
+========================================
+num_clusters,top_word,top_cluster: 8,20,4:
+训练：
+----------------------------------------
+训练集和测试集个数分别为：1653,1158
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:4.359743
+Arousal Mean absolute error:5.709354
+Valence Pearson correlation coefficient:nan
+Arousal Pearson correlation coefficient:nan
+----------------------------------------
+验证1：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.866310
+Arousal Mean absolute error:0.883353
+Valence Pearson correlation coefficient:0.808834
+Arousal Pearson correlation coefficient:0.568275
+----------------------------------------
+验证2：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.860792
+Arousal Mean absolute error:0.800931
+Valence Pearson correlation coefficient:0.808362
+Arousal Pearson correlation coefficient:0.560815
+----------------------------------------
+验证3：
+----------------------------------------
+训练集和测试集个数分别为：1323,330
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.853134
+Arousal Mean absolute error:0.804196
+Valence Pearson correlation coefficient:0.826438
+Arousal Pearson correlation coefficient:0.647193
+----------------------------------------
+验证4：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.893023
+Arousal Mean absolute error:0.830411
+Valence Pearson correlation coefficient:0.800050
+Arousal Pearson correlation coefficient:0.568742
+----------------------------------------
+验证5：
+----------------------------------------
+训练集和测试集个数分别为：1322,331
+columns:['Valence_Mean']
+----------------------------------------
+Valence Mean absolute error:0.856079
+Arousal Mean absolute error:0.834213
+Valence Pearson correlation coefficient:0.803038
+Arousal Pearson correlation coefficient:0.545410
+----------------------------------------
+[4.359743136139242, 0.86631043091176052, 0.86079244549373579, 0.85313388367416865, 0.89302266691671628, 0.85607931328594855, 0.86586774805646594]
+[5.7093540523360868, 0.88335261036348456, 0.80093103794091092, 0.80419590150134246, 0.83041063982809782, 0.8342125788956859, 0.83062055370590426]
+[nan, 0.80883429718158195, 0.80836225641314352, 0.82643771228991503, 0.80004957924542952, 0.80303773901808639, 0.80934431682963126]
+[nan, 0.5682748960557078, 0.56081541603029827, 0.6471933499232283, 0.56874151208542778, 0.54540963441815149, 0.57808696170256268]
+
+Process finished with exit code 0
