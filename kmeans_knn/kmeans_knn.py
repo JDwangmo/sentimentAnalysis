@@ -394,9 +394,9 @@ def select_kmeans_k():
 
 
 def cross_validation():
-    for num_clusters in [8]:
-        for top_word in [ 8,20]:
-            for top_cluster in [ 4]:
+    for num_clusters in [8,9,10,11,12]:
+        for top_word in [8,20]:
+            for top_cluster in [ 3]:
                 # num_clusters = 200
                 # top_word = 3
                 # top_cluster = 3
@@ -420,12 +420,13 @@ def cross_validation():
                     knnCluster(train_data,
                                num_clusters,
                                columns=['Valence_Mean'],
-                               verbose=0)
+                               verbose=0,
+                               )
                     V_mae, A_mae, V_p, A_p = evaluate(
                         train_data, test_data, top_word=top_word, top_cluster=top_cluster,
                         predict_method=1,
                         threshold=0.3,
-                        use_kmeans=False,
+                        use_kmeans=True,
                         revise=False,
                         use_emotional_lexicon=False,
                         verbose=0)
@@ -448,7 +449,7 @@ def cross_validation():
 
 def test1():
     # 测试模型
-    train_data, test_data = dutil.get_train_test_data(version='2').next()
+    train_data, test_data = dutil.get_train_test_data(version='1').next()
     print('训练集和测试集个数分别为：%d,%d' % (len(train_data), len(test_data)))
     print('=' * 40)
     # print(test_data.head())
@@ -470,7 +471,7 @@ def test1():
              top_word=20,
              top_cluster=3,
              threshold=0.3,
-             use_kmeans=False,
+             use_kmeans=True,
              use_emotional_lexicon=True,
              revise=True,
              verbose=2,
@@ -483,5 +484,5 @@ def test1():
 
 if __name__ == '__main__':
     # select_kmeans_k()
-    test1()
-    # cross_validation()
+    # test1()
+    cross_validation()

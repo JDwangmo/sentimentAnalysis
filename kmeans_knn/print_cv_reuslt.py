@@ -7,9 +7,14 @@
 """
 from __future__ import print_function
 
-choice = 3
+choice = 1
+# select==0,V_mae
+# select==1,A_mae
+# select==2,V_Pea
+# select==3,A_Pea
+select = 2
 count =0
-with open('/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/cross_validation/knn_社区_最后修正_5fold_cv.txt','r') as fin:
+with open('/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/cross_validation/topK_KM_5fold_cv.txt','r') as fin:
     for line in fin:
         line = line.strip()
         if choice ==1:
@@ -19,7 +24,7 @@ with open('/home/jdwang/PycharmProjects/sentimentAnalysis/kmeans_knn/cross_valid
         elif choice==2:
             if line.startswith('['):
                 line = line.replace('[','').replace(']','')
-                if count%4==2:
+                if count%4==select:
                     print(line)
                 count+=1
         elif choice==3:
